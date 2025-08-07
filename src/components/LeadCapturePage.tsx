@@ -2,16 +2,17 @@ import { LeadCaptureForm } from './LeadCaptureForm';
 import { SuccessMessage } from './SuccessMessage';
 import { useLeadStore } from '@/lib/lead-store';
 import { Rocket, Star, Users } from 'lucide-react';
+import backgroundAnimation from '@/assets/background-animation.jpg';
 
 export const LeadCapturePage = () => {
   const { submitted } = useLeadStore();
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background GIF */}
+      {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://fwjfenbkcgfgkaijgtsi.supabase.co/storage/v1/object/public/gif//noartistjustwatching_crazy_dynamic_camera_movements_with_high_e0c4efb9-94aa-43c8-9c61-04b82bfe6405_0.gif"
+          src={backgroundAnimation}
           alt="Background animation"
           className="w-full h-full object-cover"
         />
@@ -33,28 +34,33 @@ export const LeadCapturePage = () => {
             <Rocket className="w-8 h-8 text-primary" />
             <span className="text-2xl font-bold text-foreground">StartupName</span>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
             The Future of
             <span className="bg-gradient-primary bg-clip-text text-transparent"> Innovation</span>
             <br />
             Starts Here
           </h1>
-          
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Join thousands of forward-thinking individuals who are shaping the next big thing. 
-            Be part of something extraordinary.
+
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Join thousands of forward-thinking individuals who are shaping tomorrow's technology. 
+            Be the first to experience revolutionary solutions that will transform how we work, 
+            create, and connect.
           </p>
 
           {/* Social Proof */}
-          <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground mb-12">
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              <span>10,000+ early adopters</span>
+          <div className="flex items-center justify-center space-x-8 mb-8">
+            <div className="flex items-center space-x-2">
+              <Users className="w-5 h-5 text-accent" />
+              <span className="text-sm text-muted-foreground">10,000+ Members</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 fill-current text-accent" />
-              <span>Backed by top VCs</span>
+            <div className="flex items-center space-x-2">
+              <Star className="w-5 h-5 text-accent" />
+              <span className="text-sm text-muted-foreground">4.9/5 Rating</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Rocket className="w-5 h-5 text-accent" />
+              <span className="text-sm text-muted-foreground">Launching Soon</span>
             </div>
           </div>
         </div>
@@ -63,8 +69,10 @@ export const LeadCapturePage = () => {
         {submitted ? <SuccessMessage /> : <LeadCaptureForm />}
 
         {/* Footer */}
-        <div className="mt-16 text-center text-sm text-muted-foreground">
-          <p>Trusted by innovators worldwide • No spam, ever • Unsubscribe anytime</p>
+        <div className="mt-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            © 2025 StartupName. Building the future, one innovation at a time.
+          </p>
         </div>
       </div>
     </div>

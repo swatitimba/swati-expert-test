@@ -1,9 +1,30 @@
 import { CheckCircle, Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLeadStore } from '@/lib/lead-store';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 export const SuccessMessage = () => {
-  const { setSubmitted, sessionLeads } = useLeadStore();
+  const { setSubmitted } = useLeadStore();
+  const [totalLeads, setTotalLeads] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalLeads = async () => {
+      try {
+        const { count, error } = await supabase
+          .from('leads')
+          .select('*', { count: 'exact', head: true });
+        
+        if (!error && count !== null) {
+          setTotalLeads(count);
+        }
+      } catch (error) {
+        console.error('Error fetching lead count:', error);
+      }
+    };
+
+    fetchTotalLeads();
+  }, []);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -19,13 +40,13 @@ export const SuccessMessage = () => {
         <h2 className="text-3xl font-bold text-foreground mb-3">
           Welcome aboard! 🎉
         </h2>
-        
+
         <p className="text-muted-foreground mb-2">
           Thanks for joining! We'll be in touch soon with updates.
         </p>
-        
+
         <p className="text-sm text-accent mb-8">
-          You're #{sessionLeads.length} in this session
+          You're #{totalLeads} to join our community
         </p>
 
         <div className="space-y-4">
@@ -42,14 +63,8 @@ export const SuccessMessage = () => {
             className="w-full border-border hover:bg-accent/10 transition-smooth group"
           >
             Submit Another Lead
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-smooth" />
           </Button>
-        </div>
-
-        <div className="mt-6 pt-6 border-t border-border">
-          <p className="text-xs text-muted-foreground">
-            Follow our journey on social media for real-time updates
-          </p>
         </div>
       </div>
     </div>
